@@ -6,22 +6,16 @@ A Godot plugin and example project for loading assets from the [hypercore-protoc
 
 ## Plans:
 
-- Create a node-js based daemon using the `hypercore-fetch` module listening on UNIX domain sockets / Windows named pipes listening on HTTPs
-- Use HTTPClient in GDScript to connect over the unix socket
+- Create a node-js based gateway using the `hypercore-fetch` module listening on http://localhost/
+- Use HTTPClient in GDScript to connect to the gateway
+- Spawn gateway from within Godot in a singleton
 - Intercept the resource loading code to support `hyper://`?
-- Spawn daemon from within Godot in a singleton
 
 ## Research:
 
-### How to communicate over UNIX sockets
-
-- StreamPeer seems to [imply UNIX sockets are supported](https://docs.godotengine.org/en/stable/classes/class_streampeer.html#description)
-- Looks like it isn't actually supported: https://github.com/godotengine/godot/issues/48862
-- Also no support for windows sockets
-- Could implement, or go with something else.
-
 ### How to spawn the daemon
 
+- [Use pkg](https://www.npmjs.com/package/pkg) to compile [hyper-gateway](https://github.com/RangerMauve/hyper-gateway)
 - Bundle daemon binaries with the project
 - Use [OS.execute](https://docs.godotengine.org/en/stable/classes/class_os.html#class-os-method-execute) with non-blocking mode enabled.
 - Ensure the process is killed before exiting?
