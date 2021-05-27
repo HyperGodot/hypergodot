@@ -11,13 +11,14 @@ config_version=4
 [application]
 
 config/name="HyperGodot"
-run/main_scene="res://HyperLoad.tscn"
+run/main_scene="res://src/HyperLoad.tscn"
 config/icon="res://icon.png"
 
 [display]
 
 window/size/width=666
 window/size/height=666
+window/dpi/allow_hidpi=true
 
 [physics]
 
