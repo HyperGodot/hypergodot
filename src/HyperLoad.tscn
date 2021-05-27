@@ -1,0 +1,87 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/URLBar.gd" type="Script" id=1]
+[ext_resource path="res://src/GatewayRequest.gd" type="Script" id=2]
+[ext_resource path="res://src/StatusLabel.gd" type="Script" id=3]
+[ext_resource path="res://src/Output.gd" type="Script" id=4]
+[ext_resource path="res://src/ResizeRoot.gd" type="Script" id=5]
+
+[node name="Control" type="VBoxContainer"]
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+margin_right = 280.0
+margin_bottom = 14.0
+size_flags_horizontal = 4
+text = "Enter your `hyper://` URL and press `Load`"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_top = 18.0
+margin_right = 280.0
+margin_bottom = 42.0
+alignment = 1
+
+[node name="URLBar" type="LineEdit" parent="HBoxContainer"]
+margin_right = 234.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "hyper://blog.mauve.moe/"
+caret_blink = true
+caret_blink_speed = 0.5
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoadButton" type="Button" parent="HBoxContainer"]
+margin_left = 238.0
+margin_right = 280.0
+margin_bottom = 24.0
+text = "Load"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_top = 46.0
+margin_right = 280.0
+margin_bottom = 46.0
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="Output" type="RichTextLabel" parent="ScrollContainer"]
+margin_right = 280.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 4 )
+
+[node name="StatusLabel" type="Label" parent="."]
+margin_top = 50.0
+margin_right = 280.0
+margin_bottom = 64.0
+text = "Status: Waiting"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HyperLoad" type="HTTPRequest" parent="."]
+script = ExtResource( 2 )
+
+[connection signal="text_entered" from="HBoxContainer/URLBar" to="HBoxContainer/URLBar" method="_on_URLBar_text_entered"]
+[connection signal="url" from="HBoxContainer/URLBar" to="HyperLoad" method="requestHyper"]
+[connection signal="pressed" from="HBoxContainer/LoadButton" to="HBoxContainer/URLBar" method="navigate"]
+[connection signal="failed_load" from="HyperLoad" to="StatusLabel" method="setError"]
+[connection signal="loaded_data" from="HyperLoad" to="StatusLabel" method="setLoaded"]
+[connection signal="loaded_data" from="HyperLoad" to="ScrollContainer/Output" method="setContent"]
+[connection signal="loading_data" from="HyperLoad" to="StatusLabel" method="setLoadingData"]
+[connection signal="request_completed" from="HyperLoad" to="HyperLoad" method="_on_request_completed"]
+[connection signal="started_gateway" from="HyperLoad" to="StatusLabel" method="setGatewayLoaded"]
+[connection signal="starting_gateway" from="HyperLoad" to="StatusLabel" method="setGatewayLoading"]
