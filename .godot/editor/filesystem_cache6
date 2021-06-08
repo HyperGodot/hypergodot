@@ -1,0 +1,12 @@
+3844edc3d1660e6e25a999aafc25a878
+::res://::1622251215
+default_env.tres::Environment::1622100229::0::1::::<><>::
+icon.png::StreamTexture2D::1621449955::1622251219::1::::<><>::
+::res://hyper-gateway/::1622100176
+::res://src/::1622245301
+GatewayRequest.gd::GDScript::1622094645::0::1::::<>HTTPRequest<>::
+HyperLoad.tscn::PackedScene::1622100229::0::1::::<><>::res://src/URLBar.gd<>res://src/GatewayRequest.gd<>res://src/StatusLabel.gd<>res://src/Output.gd<>res://src/ResizeRoot.gd
+Output.gd::GDScript::1622094345::0::1::::<>RichTextLabel<>::
+ResizeRoot.gd::GDScript::1622084757::0::1::::<>VBoxContainer<>::
+StatusLabel.gd::GDScript::1622094484::0::1::::<>Label<>::
+URLBar.gd::GDScript::1621968967::0::1::::<>LineEdit<>::

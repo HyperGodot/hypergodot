@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/URLBar.gd" type="Script" id=1]
-[ext_resource path="res://src/GatewayRequest.gd" type="Script" id=2]
+[ext_resource path="res://src/HyperRequest.gd" type="Script" id=2]
 [ext_resource path="res://src/StatusLabel.gd" type="Script" id=3]
 [ext_resource path="res://src/Output.gd" type="Script" id=4]
 [ext_resource path="res://src/ResizeRoot.gd" type="Script" id=5]
@@ -52,20 +52,21 @@ __meta__ = {
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_top = 46.0
 margin_right = 280.0
-margin_bottom = 46.0
+margin_bottom = 58.0
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="Output" type="RichTextLabel" parent="ScrollContainer"]
 margin_right = 280.0
+margin_bottom = 12.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 4 )
 
 [node name="StatusLabel" type="Label" parent="."]
-margin_top = 50.0
+margin_top = 62.0
 margin_right = 280.0
-margin_bottom = 64.0
+margin_bottom = 76.0
 text = "Status: Waiting"
 script = ExtResource( 3 )
 __meta__ = {
@@ -76,12 +77,7 @@ __meta__ = {
 script = ExtResource( 2 )
 
 [connection signal="text_entered" from="HBoxContainer/URLBar" to="HBoxContainer/URLBar" method="_on_URLBar_text_entered"]
-[connection signal="url" from="HBoxContainer/URLBar" to="HyperLoad" method="requestHyper"]
+[connection signal="url" from="HBoxContainer/URLBar" to="HyperLoad" method="request"]
 [connection signal="pressed" from="HBoxContainer/LoadButton" to="HBoxContainer/URLBar" method="navigate"]
-[connection signal="failed_load" from="HyperLoad" to="StatusLabel" method="setError"]
-[connection signal="loaded_data" from="HyperLoad" to="StatusLabel" method="setLoaded"]
-[connection signal="loaded_data" from="HyperLoad" to="ScrollContainer/Output" method="setContent"]
-[connection signal="loading_data" from="HyperLoad" to="StatusLabel" method="setLoadingData"]
-[connection signal="request_completed" from="HyperLoad" to="HyperLoad" method="_on_request_completed"]
-[connection signal="started_gateway" from="HyperLoad" to="StatusLabel" method="setGatewayLoaded"]
-[connection signal="starting_gateway" from="HyperLoad" to="StatusLabel" method="setGatewayLoading"]
+[connection signal="request_completed" from="HyperLoad" to="StatusLabel" method="_on_HyperLoad_request_completed"]
+[connection signal="request_completed" from="HyperLoad" to="ScrollContainer/Output" method="_on_HyperLoad_request_completed"]
