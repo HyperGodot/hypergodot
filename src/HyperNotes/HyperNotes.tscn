@@ -1,0 +1,88 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/HyperNotes/HyperNotes.gd" type="Script" id=1]
+[ext_resource path="res://src/HyperRequest/HyperRequest.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/HyperNotes/ListFiles.gd" type="Script" id=4]
+[ext_resource path="res://src/HyperGateway/HyperGateway.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/HyperNotes/GetContent.gd" type="Script" id=6]
+[ext_resource path="res://src/HyperNotes/SaveContent.gd" type="Script" id=8]
+
+[node name="Control" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatusLabel" type="Label" parent="."]
+margin_right = 666.0
+margin_bottom = 14.0
+text = "Choose a file to edit, or enter a file name."
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_top = 18.0
+margin_right = 666.0
+margin_bottom = 666.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Files" type="Tree" parent="HBoxContainer"]
+margin_right = 222.0
+margin_bottom = 648.0
+rect_min_size = Vector2( 222, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 226.0
+margin_right = 666.0
+margin_bottom = 648.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+margin_right = 440.0
+margin_bottom = 24.0
+
+[node name="FilePathInput" type="LineEdit" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_right = 349.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "hyper://notes/note.txt"
+
+[node name="SaveButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 353.0
+margin_right = 394.0
+margin_bottom = 24.0
+text = "Save"
+
+[node name="LoadButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 398.0
+margin_right = 440.0
+margin_bottom = 24.0
+text = "Load"
+
+[node name="FileContent" type="TextEdit" parent="HBoxContainer/VBoxContainer"]
+margin_top = 28.0
+margin_right = 440.0
+margin_bottom = 648.0
+size_flags_vertical = 3
+
+[node name="HyperGateway" parent="." instance=ExtResource( 5 )]
+
+[node name="ListFiles" parent="HyperGateway" instance=ExtResource( 3 )]
+script = ExtResource( 4 )
+
+[node name="GetContent" parent="HyperGateway" instance=ExtResource( 3 )]
+script = ExtResource( 6 )
+
+[node name="SaveContent" parent="HyperGateway" instance=ExtResource( 3 )]
+script = ExtResource( 8 )
+
+[connection signal="item_selected" from="HBoxContainer/Files" to="." method="_on_Files_item_selected"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
+[connection signal="files" from="HyperGateway/ListFiles" to="." method="_on_ListFiles_files"]
+[connection signal="request_completed" from="HyperGateway/ListFiles" to="HyperGateway/ListFiles" method="_on_ListFiles_request_completed"]
+[connection signal="content" from="HyperGateway/GetContent" to="." method="_on_GetContent_content"]
+[connection signal="request_completed" from="HyperGateway/GetContent" to="HyperGateway/GetContent" method="_on_GetContent_request_completed"]
+[connection signal="request_completed" from="HyperGateway/SaveContent" to="HyperGateway/SaveContent" method="_on_SaveContent_request_completed"]
+[connection signal="saved" from="HyperGateway/SaveContent" to="." method="_on_SaveContent_saved"]

@@ -1,23 +1,27 @@
-extends HTTPRequest
+extends Node
 
-signal loaded_data(data)
-signal loading_data(url)
-signal failed_load(url, error)
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+
 signal starting_gateway()
 signal started_gateway(pid)
 
-var processPID = 0
-var storageDirectory = defaultDirectory()
-var serverPrefix = "http://127.0.0.1:4973/hyper/"
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+export var processPID = 0
+export var serverPrefix = "http://127.0.0.1:4973/hyper/"
+export var storageDirectory = 'user://gateway-data/'
+export var autoStart = false
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
 		cleanupGateway()
 	pass
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	if autoStart: ensureSetup()
+	pass # Replace with function body.
 
 func cleanupGateway():
 	if processPID == 0:
@@ -51,7 +55,7 @@ func setupGateway():
 	print("Started gateway at " + str(processPID))	
 	emit_signal("started_gateway", processPID)
 	pass
-	
+
 func ensureSetup():
 	if processPID != 0:	return
 	setupGateway()
@@ -69,15 +73,4 @@ func defaultDirectory():
 	var dir = Directory.new()
 	dir.open('user://gateway-data/')
 	return dir.get_current_dir()
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-func request(url, custom_headers=PoolStringArray( ), ssl_validate_domain=false, method=0, request_data=""):
-	assert(url.begins_with("hyper://"))
-	ensureSetup()
-	var toLoad = url.replace("hyper://", serverPrefix)
-	.request(toLoad, custom_headers, ssl_validate_domain, method, request_data)
 	pass
