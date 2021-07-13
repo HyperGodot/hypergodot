@@ -13,15 +13,15 @@ A Godot plugin and example project for loading assets from the [hypercore-protoc
 
 ## TODOs:
 
-- Reuse `HyperGateway` instance between `HyperRequest` objects
-- Example for saving data to hyper
-- Make FTP server that can be mounted as a network drive
-- Listen for changes (EventSource)
-- Listen for download progress (EventSource)
-- Listen for / Publish extension messages (EventSource)
-- Examples for all the methods exposed by the gateway.
-- Basic Multiplayer demo using extension messages
-- Folder sync (From `hyper://` to fs, from fs to `hyper://`)
+- [x] Reuse `HyperGateway` instance between `HyperRequest` objects
+- [x] Example for saving data to hyper
+- [ ] Make FTP server that can be mounted as a network drive
+- [ ] Listen for changes (EventSource)
+- [ ] Listen for download progress (EventSource)
+- [ ] Listen for / Publish extension messages (EventSource)
+- [ ] Examples for all the methods exposed by the gateway.
+- [ ] Basic Multiplayer demo using extension messages
+- [ ] Folder sync (From `hyper://` to fs, from fs to `hyper://`)
 
 ## Supported APIs:
 
