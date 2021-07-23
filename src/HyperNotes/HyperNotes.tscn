@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/HyperNotes/HyperNotes.gd" type="Script" id=1]
+[ext_resource path="res://src/HyperNotes/FileChanges.gd" type="Script" id=2]
 [ext_resource path="res://src/HyperRequest/HyperRequest.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/HyperNotes/ListFiles.gd" type="Script" id=4]
 [ext_resource path="res://src/HyperGateway/HyperGateway.tscn" type="PackedScene" id=5]
@@ -77,6 +78,9 @@ script = ExtResource( 6 )
 [node name="SaveContent" parent="HyperGateway" instance=ExtResource( 3 )]
 script = ExtResource( 8 )
 
+[node name="FileChanges" type="Node" parent="HyperGateway"]
+script = ExtResource( 2 )
+
 [connection signal="item_selected" from="HBoxContainer/Files" to="." method="_on_Files_item_selected"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
@@ -85,4 +89,5 @@ script = ExtResource( 8 )
 [connection signal="content" from="HyperGateway/GetContent" to="." method="_on_GetContent_content"]
 [connection signal="request_completed" from="HyperGateway/GetContent" to="HyperGateway/GetContent" method="_on_GetContent_request_completed"]
 [connection signal="request_completed" from="HyperGateway/SaveContent" to="HyperGateway/SaveContent" method="_on_SaveContent_request_completed"]
-[connection signal="saved" from="HyperGateway/SaveContent" to="." method="_on_SaveContent_saved"]
+[connection signal="change" from="HyperGateway/FileChanges" to="." method="_on_FileChanges_change"]
+[connection signal="event" from="HyperGateway/FileChanges" to="HyperGateway/FileChanges" method="_on_FileChanges_event"]

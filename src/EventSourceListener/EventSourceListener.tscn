@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/EventSourceListener/EventSourceListener.gd" type="Script" id=1]
+[ext_resource path="res://src/HTTPEventSource.gd" type="Script" id=2]
+
+[node name="Control" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 666.0
+margin_bottom = 24.0
+
+[node name="URLInput" type="LineEdit" parent="HBoxContainer"]
+margin_right = 598.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "http://127.0.0.1:42069/example/"
+
+[node name="SubmitButton" type="Button" parent="HBoxContainer"]
+margin_left = 602.0
+margin_right = 666.0
+margin_bottom = 24.0
+text = "Connect"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_top = 28.0
+margin_right = 666.0
+margin_bottom = 666.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Output" type="RichTextLabel" parent="ScrollContainer"]
+margin_right = 666.0
+margin_bottom = 638.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HTTPEventSource" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[connection signal="text_entered" from="HBoxContainer/URLInput" to="." method="_on_URLInput_text_entered"]
+[connection signal="pressed" from="HBoxContainer/SubmitButton" to="." method="_on_Button_pressed"]
+[connection signal="event" from="HTTPEventSource" to="." method="_on_HTTPEventSource_event"]
+[connection signal="response_finished" from="HTTPEventSource" to="." method="_on_HTTPEventSource_response_finished"]
+[connection signal="response_started" from="HTTPEventSource" to="." method="_on_HTTPEventSource_response_started"]

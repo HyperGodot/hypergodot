@@ -1,6 +1,6 @@
-extends HTTPRequest
+extends HTTPEventSource
 
-class_name HyperRequest
+class_name HyperEventSource
 
 signal loading_data(url)
 

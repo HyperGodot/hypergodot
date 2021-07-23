@@ -8,6 +8,34 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "HTTPEventSource",
+"language": "GDScript",
+"path": "res://src/HTTPEventSource.gd"
+}, {
+"base": "HTTPEventSource",
+"class": "HyperEventSource",
+"language": "GDScript",
+"path": "res://src/HyperRequest/HyperEventSource.gd"
+}, {
+"base": "Node",
+"class": "HyperGateway",
+"language": "GDScript",
+"path": "res://src/HyperGateway/HyperGateway.gd"
+}, {
+"base": "HTTPRequest",
+"class": "HyperRequest",
+"language": "GDScript",
+"path": "res://src/HyperRequest/HyperRequest.gd"
+} ]
+_global_script_class_icons={
+"HTTPEventSource": "",
+"HyperEventSource": "",
+"HyperGateway": "",
+"HyperRequest": ""
+}
+
 [application]
 
 config/name="HyperGodot"

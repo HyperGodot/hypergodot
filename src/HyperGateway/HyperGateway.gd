@@ -1,9 +1,6 @@
 extends Node
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+class_name HyperGateway
 
 signal starting_gateway()
 signal started_gateway(pid)
@@ -12,6 +9,8 @@ export var processPID = 0
 export var serverPrefix = "http://127.0.0.1:4973/hyper/"
 export var storageDirectory = 'user://gateway-data/'
 export var autoStart = false
+export var writable = true
+export var persist = true
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
@@ -30,18 +29,26 @@ func cleanupGateway():
 	print('Cleaning up gateway ' + str(processPID))
 	OS.kill(processPID)
 	pass
+	
+func _resolvePath(path):
+	var file = File.new()
+	file.open(path, File.READ)
+	var finalPath = file.get_path_absolute()
+	file.close()
+	return finalPath
 
 func setupGateway():
 	emit_signal("starting_gateway")
 	var executiblePath = getExecutiblePath()
-	var executibleFile = File.new()
+	var path = _resolvePath(executiblePath)
 
-	executibleFile.open(executiblePath, File.READ)
+	var args = ["run"]
+	if !persist: args.append('--no-persist')
+	if writable: args.append('--writable')
 	
-	var path = executibleFile.get_path_absolute()
-	executibleFile.close()
-
-	var args = ["run", "--no-persist"]
+	var resolvedStorageDirectory = _resolvePath(storageDirectory)
+	args.append('--storage-location')
+	args.append(resolvedStorageDirectory)
 	
 	print("Starting gateway from " + path)
 	
