@@ -17,10 +17,15 @@ A Godot plugin and example project for loading assets from the [hypercore-protoc
 - [x] Example for saving data to hyper
 - [x] Make FTP server that can be mounted as a network drive
 - [x] Listen for changes (EventSource)
-- [ ] Listen for download progress (EventSource)
-- [ ] Listen for / Publish extension messages (EventSource)
+- [x] Listen for download progress (EventSource)
+- [x] Listen for / Publish extension messages (EventSource)
 - [ ] Examples for all the methods exposed by the gateway.
+	- [x] GET/PUT text files
+	- [x] Watch for changes
+	- [ ] Basic chat app (WIP
 - [ ] Basic Multiplayer demo using extension messages
+- [ ] Load gltf scene from hyper
+- [ ] Load VRM avatar from hyper (social multiplayer) [VRM stuff](https://github.com/V-Sekai/godot-vrm/blob/godot3/addons/vrm/import_vrm.gd)
 - [ ] Folder sync (From `hyper://` to fs, from fs to `hyper://`)
 
 ## Supported APIs:

@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/HyperChat/HyperChat.gd" type="Script" id=1]
+[ext_resource path="res://src/HyperGateway/HyperGateway.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/HyperRequest/HyperEventSource.gd" type="Script" id=3]
+[ext_resource path="res://src/HyperRequest/HyperRequest.gd" type="Script" id=4]
+
+[node name="Control" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 666.0
+margin_bottom = 24.0
+
+[node name="ChatInput" type="LineEdit" parent="HBoxContainer"]
+margin_right = 487.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="SendButton" type="Button" parent="HBoxContainer"]
+margin_left = 491.0
+margin_right = 534.0
+margin_bottom = 24.0
+text = "Send"
+
+[node name="Username" type="LineEdit" parent="HBoxContainer"]
+margin_left = 538.0
+margin_right = 666.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 128, 0 )
+text = "Anonymous"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_top = 28.0
+margin_right = 666.0
+margin_bottom = 666.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ChatBox" type="RichTextLabel" parent="ScrollContainer"]
+margin_right = 666.0
+margin_bottom = 638.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "System: Enter some text and hit `send` to broadcast it to peers.
+"
+
+[node name="HyperGateway" parent="." instance=ExtResource( 2 )]
+
+[node name="HyperEventSource" type="Node" parent="HyperGateway"]
+script = ExtResource( 3 )
+
+[node name="BroadcastRequest" type="HTTPRequest" parent="HyperGateway"]
+script = ExtResource( 4 )
+
+[node name="ListPeersRequest" type="HTTPRequest" parent="HyperGateway"]
+script = ExtResource( 4 )
+
+[connection signal="text_entered" from="HBoxContainer/ChatInput" to="." method="_on_ChatInput_text_entered"]
+[connection signal="pressed" from="HBoxContainer/SendButton" to="." method="_on_SendButton_pressed"]
+[connection signal="started_gateway" from="HyperGateway" to="." method="_on_HyperGateway_started_gateway"]
+[connection signal="event" from="HyperGateway/HyperEventSource" to="." method="_on_HyperEventSource_event"]
