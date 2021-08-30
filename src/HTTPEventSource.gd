@@ -106,7 +106,7 @@ func _runRequest(params):
 			if line.find("data:") == 0: currentEvent["data"] += line.trim_prefix("data:")
 			if line.find("id:") == 0: currentEvent["id"] = line.trim_prefix("id:")
 			if line.find("event:") == 0: currentEvent["event"] = line.trim_prefix("event:")
-			
+
 			var isEmpty = line.length() == 0
 			if isEmpty:
 				call_deferred("emit_signal", "event", currentEvent.data, currentEvent.event, currentEvent.id)

@@ -26,7 +26,7 @@ var seen_identities = LRU.new()
 
 onready var eventSource = $HyperGateway/HyperEventSource
 onready var gateway = $HyperGateway
-onready var chatbox = $ScrollContainer/CatBox
+onready var chatBox = $ScrollContainer/ChatBox
 onready var chatText = $HBoxContainer/ChatInput
 onready var username = $HBoxContainer/Username
 onready var broadcastRequest = $HyperGateway/BroadcastRequest
@@ -39,11 +39,12 @@ func _ready():
 
 func display_item(from, content):
 	# Add to item list	
-	chatText.text += from + ': ' + content + "\n" 
+	chatBox.text += from + ': ' + content + "\n" 
 
 func send_current():
 	var text = chatText.text
 	chatText.text = ""
+	display_item(get_username(), text)
 	broadcast_text(text)
 
 func update_identity(from, username):
@@ -92,12 +93,12 @@ func broadcast_identity():
 
 func broadcast_message(message):
 	# POST to extension URL	
-	if !message.has('id'):
+	if !("id" in message):
 		message.id = make_id()
 	seen_messages.track(message.id)
-	print('Broadcasting message', message)
+	print('Broadcasting message', message, extensionPath)
 	var body = JSON.print(message)
-	broadcastRequest.request(extensionPath,[], false, HTTPClient.METHOD_GET, body)
+	broadcastRequest.request(extensionPath,[], false, HTTPClient.METHOD_POST, body)
 
 func has_seen_identity(from):
 	return seen_identities.has(from)
@@ -106,13 +107,13 @@ func has_seen_message(id):
 	return seen_messages.has(id)
 
 func re_broadcast(message, from):
-	if !message.has('from'):
+	if !("from" in message):
 		message.from = from
 	broadcast_message(message)
 
 func handle_message(message, from):
-	var finalFrom = message.from if message.has('from') else from
-	if !message.has('id'):
+	var finalFrom = message.from if "from" in message else from
+	if !("id" in message):
 		return _on_unknown_message(message, finalFrom)
 	if !has_seen_message(message.id):
 		re_broadcast(message, finalFrom)
@@ -144,6 +145,7 @@ func _on_HyperEventSource_event(data, event, id):
 
 func _on_HyperGateway_started_gateway(pid):
 	start_listening()
+	list_peers()
 	broadcast_identity()
 
 func _on_SendButton_pressed():
