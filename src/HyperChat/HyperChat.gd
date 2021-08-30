@@ -115,8 +115,10 @@ func handle_message(message, from):
 	var finalFrom = message.from if "from" in message else from
 	if !("id" in message):
 		return _on_unknown_message(message, finalFrom)
-	if !has_seen_message(message.id):
-		re_broadcast(message, finalFrom)
+	if has_seen_message(message.id):
+		return
+
+	re_broadcast(message, finalFrom)
 	match message.type:
 		'text':
 			_on_text_message(message, finalFrom)
