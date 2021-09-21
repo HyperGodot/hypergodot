@@ -33,12 +33,12 @@ func setGatewayLoading():
 	pass # Replace with function body.
 
 
-func setGatewayLoaded(pid):
+func setGatewayLoaded(_pid):
 	text = "Status: Gateway Loaded"
 	pass # Replace with function body.
 
 
-func _on_HyperLoad_request_completed(result, response_code, headers, body):
+func _on_HyperLoad_request_completed(_result, response_code, _headers, body):
 	print("Response Code ", response_code)
 	if response_code != 200:
 		var message = body.get_string_from_utf8()

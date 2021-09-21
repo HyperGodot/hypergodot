@@ -19,5 +19,4 @@ func request(
 	emit_signal('loading_data', url)
 
 	print(method, ' ', toLoad)
-	.request(toLoad, custom_headers, ssl_validate_domain, method, request_data)
-pass
+	return .request(toLoad, custom_headers, ssl_validate_domain, method, request_data)

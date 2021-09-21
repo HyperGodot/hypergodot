@@ -24,6 +24,6 @@ func navigate():
 	pass # Replace with function body.
 
 
-func _on_URLBar_text_entered(new_text):
+func _on_URLBar_text_entered(_new_text):
 	navigate()
 	pass # Replace with function body.

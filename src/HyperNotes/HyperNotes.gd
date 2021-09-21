@@ -10,11 +10,6 @@ onready var fileChanges = $HyperGateway/FileChanges
 
 export var source = "hyper://notes/"
 
-func _ready():
-	fileChanges.request(source)
-	fileLister.list(source)
-	loader.getContent(filePathInput.text)
-
 func _on_SaveButton_pressed():
 	saver.save(filePathInput.text, fileContent.text)
 	pass
@@ -55,3 +50,9 @@ func _on_Files_item_selected():
 func _on_FileChanges_change():
 	fileLister.list(source)
 	pass # Replace with function body.
+
+
+func _on_HyperGateway_started_gateway(_pid):
+	fileChanges.request(source)
+	fileLister.list(source)
+	loader.getContent(filePathInput.text)

@@ -78,7 +78,6 @@ __meta__ = {
 }
 
 [node name="HyperGateway" parent="." instance=ExtResource( 6 )]
-autoStart = true
 
 [node name="HyperRequest" parent="HyperGateway" instance=ExtResource( 2 )]
 

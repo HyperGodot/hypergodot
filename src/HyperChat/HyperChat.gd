@@ -35,7 +35,7 @@ onready var listPeersRequest = $HyperGateway/ListPeersRequest
 func _ready():
 	# Initialize random number generator
 	randomize()
-	gateway.ensureSetup()
+	gateway.start()
 
 func display_item(from, content):
 	# Add to item list	
@@ -47,7 +47,7 @@ func send_current():
 	display_item(get_username(), text)
 	broadcast_text(text)
 
-func update_identity(from, username):
+func update_identity(_from, username):
 	# Have some sort of sidebar to display known users?	
 	display_item('System', 'Seen user ' + username)
 	pass
@@ -55,11 +55,11 @@ func update_identity(from, username):
 func list_peers():
 	listPeersRequest.request(extensionPath)
 
-func _on_text_message(data, from):
+func _on_text_message(data, _from):
 	# TODO: Something fancy with the `from` attribute?
 	display_item(data.username, data.content)
 	
-func _on_identity_message(data, from):
+func _on_identity_message(_data, from):
 	var isNew = !has_seen_identity(from)
 
 	# Track identity
@@ -127,7 +127,7 @@ func handle_message(message, from):
 		_:
 			_on_unknown_message(message, finalFrom)
 
-func _on_event(data, event, id):
+func _on_event(data, _event, id):
 	var parsed = JSON.parse(data)
 	
 	if parsed.error != OK:
@@ -145,7 +145,7 @@ func start_listening():
 func _on_HyperEventSource_event(data, event, id):
 	_on_event(data, event, id)
 
-func _on_HyperGateway_started_gateway(pid):
+func _on_HyperGateway_started_gateway(_pid):
 	start_listening()
 	list_peers()
 	broadcast_identity()

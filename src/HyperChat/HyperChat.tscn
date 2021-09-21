@@ -51,6 +51,7 @@ text = "System: Enter some text and hit `send` to broadcast it to peers.
 "
 
 [node name="HyperGateway" parent="." instance=ExtResource( 2 )]
+autoStart = false
 
 [node name="HyperEventSource" type="Node" parent="HyperGateway"]
 script = ExtResource( 3 )

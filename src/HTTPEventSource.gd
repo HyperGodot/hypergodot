@@ -5,8 +5,6 @@ class_name HTTPEventSource
 const URLParser = preload('./utils/URLParser.gd')
 
 signal event(data, event, id)
-signal response_started(status, headers)
-signal response_finished()
 
 var http = HTTPClient.new()
 var urlParser = URLParser.new()
@@ -47,8 +45,7 @@ func request(
 	pass
 
 func _runRequest(params):
-	var err = 0
-	http.connect_to_host(params.host, params.port, params.use_ssl, params.verify_host)
+	var err = http.connect_to_host(params.host, params.port, params.use_ssl, params.verify_host)
 	
 	print('Connected to host')
 	

@@ -18,6 +18,7 @@ func parse(url):
 	var path = parsed.get_string(3)
 	var host = raw_host
 	var port = DEFAULT_PORTS[protocol]
+	var ssl = protocol == "https"
 
 	if ":" in raw_host:
 		var split = raw_host.split(':')
@@ -28,5 +29,6 @@ func parse(url):
 		"protocol": protocol,
 		"host": host,
 		"port": port,
-		"path": path
+		"path": path,
+		"ssl": ssl,
 	}

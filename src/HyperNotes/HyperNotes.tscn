@@ -84,6 +84,7 @@ script = ExtResource( 2 )
 [connection signal="item_selected" from="HBoxContainer/Files" to="." method="_on_Files_item_selected"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
+[connection signal="started_gateway" from="HyperGateway" to="." method="_on_HyperGateway_started_gateway"]
 [connection signal="files" from="HyperGateway/ListFiles" to="." method="_on_ListFiles_files"]
 [connection signal="request_completed" from="HyperGateway/ListFiles" to="HyperGateway/ListFiles" method="_on_ListFiles_request_completed"]
 [connection signal="content" from="HyperGateway/GetContent" to="." method="_on_GetContent_content"]
