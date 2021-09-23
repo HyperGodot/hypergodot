@@ -10,16 +10,19 @@ signal started_gateway(pid)
 signal started_download(version)
 signal finished_download(version)
 
-export var writable = true
-export var persist = true
+export var writable: bool = true
+export var persist: bool = true
 
-export var autoStart = true
-export var autoDownload = true
-export var autoUpdate = false
+export var autoStart: bool = true
+export var autoDownload: bool = true
+export var autoUpdate: bool = false
 
-export var storageDirectory = "user://gateway-data/"
-export var repositoryName = "rangermauve/hyper-gateway"
-export var tagStart = "v2"
+const DEFAULT_PORT = 4973
+
+export var port: int = DEFAULT_PORT
+export var storageDirectory: String = "user://gateway-data/"
+export var repositoryName: String = "rangermauve/hyper-gateway"
+export var tagStart: String = "v2"
 
 ## TODO: Use this tag if the `latest` release doesn't match the tag?
 # export var defaultTag = "v2.1.3"
@@ -68,6 +71,10 @@ func setupGateway():
 	var args = ["run"]
 	if !persist: args.append('--no-persist')
 	if writable: args.append('--writable')
+	
+	if port != DEFAULT_PORT:
+		args.append('--port')
+		args.append(String(port))
 	
 	var resolvedStorageDirectory = ProjectSettings.globalize_path(storageDirectory)
 	args.append('--storage-location')

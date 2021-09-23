@@ -18,5 +18,4 @@ func request(
 	var toLoad = url.replace("hyper://", serverPrefix)
 	emit_signal('loading_data', url)
 
-	print(method, ' ', toLoad)
 	return .request(toLoad, custom_headers, ssl_validate_domain, method, request_data)

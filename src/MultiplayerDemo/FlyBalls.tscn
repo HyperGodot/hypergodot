@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/MultiplayerDemo/PlayerSprite.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/MultiplayerDemo/Player.gd" type="Script" id=2]
+[ext_resource path="res://src/MultiplayerDemo/FlyBalls.gd" type="Script" id=3]
+[ext_resource path="res://src/HyperGateway/HyperGateway.gd" type="Script" id=4]
+[ext_resource path="res://src/multiplayer/HyperGossip.gd" type="Script" id=5]
+
+[node name="FlyBalls" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 333, 333 )
+script = ExtResource( 2 )
+
+[node name="HyperGossip" type="Node" parent="."]
+script = ExtResource( 5 )
+extension_name = "flyballs-v1"
+
+[node name="HyperGateway" type="Node" parent="."]
+script = ExtResource( 4 )
+autoStart = false
+
+[connection signal="moved" from="Player" to="." method="_on_Player_moved"]
+[connection signal="shoot" from="Player" to="." method="_on_Player_shoot"]
+[connection signal="event" from="HyperGossip" to="." method="_on_HyperGossip_event"]
+[connection signal="listening" from="HyperGossip" to="." method="_on_HyperGossip_listening"]
+[connection signal="started_gateway" from="HyperGateway" to="." method="_on_HyperGateway_started_gateway"]

@@ -5,6 +5,7 @@ class_name HTTPEventSource
 const URLParser = preload('./utils/URLParser.gd')
 
 signal event(data, event, id)
+signal response_started(statusCode, responseHeaders)
 
 var http = HTTPClient.new()
 var urlParser = URLParser.new()
@@ -36,7 +37,7 @@ func request(
 		"request_data": request_data
 	}
 	
-	print('About to request', parsedURL, params)
+	print('About to request', parsedURL)
 
 	var thread = Thread.new()
 	
@@ -44,14 +45,24 @@ func request(
 
 	pass
 
+func _emit_started(statusCode, responseHeaders):
+	print("Emitting started")
+	emit_signal("response_started", statusCode, responseHeaders)
+
 func _runRequest(params):
 	var err = http.connect_to_host(params.host, params.port, params.use_ssl, params.verify_host)
 	
+	if err != OK:
+		printerr('Error connecting to EventSource server')
+
 	print('Connected to host')
 	
 	# Wait to establish a connection to the host
 	while http.get_status() == HTTPClient.STATUS_CONNECTING or http.get_status() == HTTPClient.STATUS_RESOLVING:
-		http.poll()
+		err = http.poll()
+		if err != OK:
+			printerr('Unable to connect to EventSource')
+			return
 		OS.delay_msec(100)
 		
 	print('Able to connect, requesting')
@@ -59,9 +70,16 @@ func _runRequest(params):
 	# Start the request
 	err = http.request(params.method, params.path, params.headers, params.request_data)
 	
+	if err != OK:
+		printerr('Unable to request EventSource')
+		return
+
 	# Wait for request to get processed and to get the body
 	while (http.get_status() == HTTPClient.STATUS_REQUESTING):
-		http.poll()
+		err = http.poll()
+		if err != OK:
+			printerr('Unable to request to EventSource')
+			return
 		OS.delay_msec(100)
 	
 	if !http.has_response():
@@ -72,10 +90,10 @@ func _runRequest(params):
 
 	var statusCode = http.get_response_code()
 	var responseHeaders = http.get_response_headers()
-	
+
 	print('Got response ', statusCode)
 	
-	call_deferred("emit_signal", "response_started", statusCode, responseHeaders)
+	call_deferred("_emit_started", statusCode, responseHeaders)
 	
 	var buffer = ""
 	var lastChunkEmpty = false

@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<testsuites failures="0" name="TestXML" tests="1" time="0.019">
+	<testsuite name="Hyper Gossip" failures="0"  tests="1" time="0">
+		<testcase name=" create gateway and connect" time="0"></testcase>
+	</testsuite>
+
+</testsuites>
