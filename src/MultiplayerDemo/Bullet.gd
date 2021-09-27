@@ -1,5 +1,6 @@
 extends Area2D
 
+var created_by = 'me'
 var initialSpeed = 600
 var velocity = Vector2(initialSpeed, 0)
 

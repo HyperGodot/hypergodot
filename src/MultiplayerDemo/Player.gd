@@ -8,28 +8,27 @@ signal shoot(bullet, direction, location)
 signal moved(position, rotation, velocity)
 
 var velocity = Vector2()
+var old_velocity = Vector2()
 
 func proccess_input():
-	var hasMoved = false
 	look_at(get_global_mouse_position())
+	old_velocity = velocity
 	velocity = Vector2()
 	if Input.is_action_pressed("right"):
-		hasMoved = true
 		velocity.x += 1
 	if Input.is_action_pressed("left"):
-		hasMoved = true
 		velocity.x -= 1
 	if Input.is_action_pressed("down"):
-		hasMoved = true
 		velocity.y += 1
 	if Input.is_action_pressed("up"):
-		hasMoved = true
 		velocity.y -= 1
 
 	velocity = velocity.normalized() * speed
 	
 	if Input.is_action_just_pressed("click"):
 		emit_signal("shoot", Bullet, rotation, position)
+		
+	var hasMoved = !velocity.is_equal_approx(old_velocity)
 
 	return hasMoved
 

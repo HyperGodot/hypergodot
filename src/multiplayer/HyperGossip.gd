@@ -26,7 +26,7 @@ func _ready():
 	add_child(broadcastRequest)
 	broadcastRequest.connect("request_completed", self, "_on_broadcast_completed")
 
-	eventSource.connect("event", self, "_on_extesnion_event")
+	eventSource.connect("event", self, "_on_event")
 	eventSource.connect("response_started", self, "_on_events_started")
 
 func start_listening():

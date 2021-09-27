@@ -16,6 +16,7 @@ const LRU = preload('res://src/utils/LRU.gd')
 # Broadcast self when seeing a new remotePublicKey
 
 export var archiveRoot = 'hyper://blog.mauve.moe/'
+#export var archiveRoot = 'hyper://70338a94d7415990ab4a3160cf98a5d940243d7fa24dd297352e66b52d3ff841/'
 export var extensionName = 'hyperchat-example-1'
 
 var extensionsFolder = archiveRoot + '$/extensions/'
