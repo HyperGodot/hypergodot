@@ -33,10 +33,12 @@ var downloadFileRequest = HTTPRequest.new()
 var downloadingVersion = null
 var downloadThread = null
 
+func _exit_tree():
+	cleanupGateway()
+
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
 		cleanupGateway()
-	pass
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -61,7 +63,7 @@ func cleanupGateway():
 		print('Gateway already closed ' + str(processPID)) 
 		return
 	print('Cleaning up gateway ' + str(processPID))
-	OS.kill(processPID)
+	return OS.kill(processPID)
 
 func setupGateway():
 	emit_signal("starting_gateway")

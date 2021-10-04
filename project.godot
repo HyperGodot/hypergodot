@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/HyperRequest/HyperRequest.gd"
 }, {
+"base": "Node",
+"class": "HyperUploader",
+"language": "GDScript",
+"path": "res://src/HyperRequest/HyperUploader.gd"
+}, {
 "base": "Reference",
 "class": "WAT",
 "language": "GDScript",
@@ -50,6 +55,7 @@ _global_script_class_icons={
 "HyperGateway": "",
 "HyperGossip": "",
 "HyperRequest": "",
+"HyperUploader": "",
 "WAT": "",
 "WATTest": ""
 }

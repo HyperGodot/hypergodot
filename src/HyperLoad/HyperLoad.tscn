@@ -87,5 +87,5 @@ __meta__ = {
 [connection signal="started_gateway" from="HyperGateway" to="StatusLabel" method="setGatewayLoaded"]
 [connection signal="starting_gateway" from="HyperGateway" to="StatusLabel" method="setGatewayLoading"]
 [connection signal="loading_data" from="HyperGateway/HyperRequest" to="StatusLabel" method="setLoading"]
-[connection signal="request_completed" from="HyperGateway/HyperRequest" to="StatusLabel" method="_on_HyperLoad_request_completed"]
 [connection signal="request_completed" from="HyperGateway/HyperRequest" to="ScrollContainer/Output" method="_on_HyperLoad_request_completed"]
+[connection signal="request_completed" from="HyperGateway/HyperRequest" to="StatusLabel" method="_on_HyperLoad_request_completed"]

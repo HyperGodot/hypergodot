@@ -17,7 +17,7 @@ func parse(url):
 	var raw_host = parsed.get_string(2)
 	var path = parsed.get_string(3)
 	var host = raw_host
-	var port = DEFAULT_PORTS[protocol]
+	var port = DEFAULT_PORTS[protocol] if DEFAULT_PORTS.has(protocol) else 0
 	var ssl = protocol == "https"
 
 	if ":" in raw_host:

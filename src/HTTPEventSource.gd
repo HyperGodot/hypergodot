@@ -135,7 +135,9 @@ func _runRequest(params):
 	call_deferred("emit_signal", "response_finished")
 pass
 
-
 func _emitEvent(params):
 	emit_signal("event", params.data, params.name, params.id)
 	pass
+
+func _exit_tree():
+	cancel_request()

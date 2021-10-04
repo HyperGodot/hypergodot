@@ -1,0 +1,108 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/MultiplayerDemo/LoadProfile.gd" type="Script" id=1]
+[ext_resource path="res://src/HyperGateway/HyperGateway.gd" type="Script" id=2]
+[ext_resource path="res://src/HyperRequest/HyperRequest.gd" type="Script" id=3]
+[ext_resource path="res://src/HyperRequest/HyperUploader.gd" type="Script" id=4]
+
+[node name="LoadProfile" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Loader" type="CenterContainer" parent="."]
+margin_right = 666.0
+margin_bottom = 331.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Loader"]
+margin_left = 308.0
+margin_top = 158.0
+margin_right = 357.0
+margin_bottom = 172.0
+text = "Loading"
+
+[node name="Form" type="VBoxContainer" parent="."]
+margin_top = 335.0
+margin_right = 666.0
+margin_bottom = 666.0
+size_flags_vertical = 3
+
+[node name="UsernameLabel" type="Label" parent="Form"]
+margin_right = 666.0
+margin_bottom = 14.0
+text = "Username"
+
+[node name="UsernameInput" type="LineEdit" parent="Form"]
+margin_top = 18.0
+margin_right = 666.0
+margin_bottom = 42.0
+text = "Anon"
+
+[node name="PictureLabel" type="Label" parent="Form"]
+margin_top = 46.0
+margin_right = 666.0
+margin_bottom = 60.0
+text = "Picture"
+
+[node name="ImageChooser" type="Button" parent="Form"]
+margin_top = 64.0
+margin_right = 666.0
+margin_bottom = 84.0
+text = "Choose Image"
+
+[node name="StartButton" type="Button" parent="Form"]
+margin_top = 88.0
+margin_right = 666.0
+margin_bottom = 108.0
+disabled = true
+text = "Start"
+
+[node name="HyperGateway" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="UploadFileRequest" type="HTTPRequest" parent="."]
+script = ExtResource( 3 )
+
+[node name="ListInfoRequest" type="HTTPRequest" parent="."]
+script = ExtResource( 3 )
+
+[node name="LoadImageRequest" type="HTTPRequest" parent="."]
+script = ExtResource( 3 )
+
+[node name="LoadURLRequest" type="HTTPRequest" parent="."]
+script = ExtResource( 3 )
+
+[node name="UpdateProfileRequest" type="HTTPRequest" parent="."]
+script = ExtResource( 3 )
+
+[node name="HyperUploader" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_top = 536.0
+margin_right = 666.0
+margin_bottom = 666.0
+popup_exclusive = true
+window_title = "Open a File"
+resizable = true
+dialog_autowrap = true
+mode = 0
+access = 2
+current_dir = "/home/mauve/programming/godot/hypergodot"
+current_path = "/home/mauve/programming/godot/hypergodot/"
+
+[connection signal="pressed" from="Form/ImageChooser" to="." method="_on_ImageChooser_pressed"]
+[connection signal="pressed" from="Form/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="started_gateway" from="HyperGateway" to="." method="_on_HyperGateway_started_gateway"]
+[connection signal="request_completed" from="UploadFileRequest" to="." method="_on_UploadFileRequest_request_completed"]
+[connection signal="request_completed" from="ListInfoRequest" to="." method="_on_ListInfoRequest_request_completed"]
+[connection signal="request_completed" from="LoadImageRequest" to="." method="_on_LoadImageRequest_request_completed"]
+[connection signal="request_completed" from="LoadURLRequest" to="." method="_on_LoadURLRequest_request_completed"]
+[connection signal="request_completed" from="UpdateProfileRequest" to="." method="_on_UpdateProfileRequest_request_completed"]
+[connection signal="uploaded" from="HyperUploader" to="." method="_on_HyperUploader_uploaded"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
