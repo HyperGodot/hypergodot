@@ -27,7 +27,7 @@ A Godot plugin and example project for loading assets from the [hypercore-protoc
 - [ ] Basic Multiplayer demo using extension messages
 	- [x] Refactor chat system to be more general purpose (not just texts)
 	- [x] Basic demo moving blobs around on a map
-	- [ ] Place usernames in a hyperdrive's json file along with an image for your blob
+	- [x] Place usernames in a hyperdrive's json file along with an image for your blob
 	- [ ] Create custom maps from an image and a JSON file
 	- [ ] Auto-discover which maps are active
 - [ ] Enable code to work in Godot Web in Agregore

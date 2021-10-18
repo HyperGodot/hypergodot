@@ -5,6 +5,8 @@ var RemoteBullet = preload("res://src/MultiplayerDemo/RemoteBullet.tscn")
 
 #export var url: String = "hyper://blog.mauve.moe/"
 export var url: String = "hyper://70338a94d7415990ab4a3160cf98a5d940243d7fa24dd297352e66b52d3ff841/"
+export var profile : String = ""
+export var spawn_gateway = true
 
 onready var gossip = $HyperGossip
 onready var player = $Player
@@ -16,7 +18,8 @@ const SHOOT = 'shoot'
 const knownPlayers = {}
 
 func _ready():
-	gateway.start()
+	if spawn_gateway: gateway.start()
+	elif profile.length() != 0: player.load_profile(profile)
 
 func get_player_object(id):
 	if knownPlayers.has(id): return knownPlayers[id]
@@ -34,6 +37,7 @@ func _broadcast_player():
 	var rotation = player.rotation_degrees
 	var velocity = player.velocity
 	var data = {
+		"profile": profile,
 		"position": {
 			"x": position.x,
 			"y": position.y
@@ -49,6 +53,7 @@ func _broadcast_player():
 
 func _broadcast_shoot(direction,location):
 	var data = {
+		"profile": profile,
 		"direction": direction,
 		"position": {
 			"x": location.x,
@@ -61,6 +66,10 @@ func _broadcast_shoot(direction,location):
 func _on_remote_player_moved(positionData, id):
 	# print('Moving player', id, " ", positionData)
 	var remotePlayer = get_player_object(id)
+	
+	if positionData.has('profile') and positionData.profile.length() != 0:
+		if !remotePlayer.has_profile: remotePlayer.load_profile(positionData.profile)
+
 	var rotation_degrees = positionData.rotation
 	var raw_position = positionData.position
 	var raw_velocity = positionData.velocity
@@ -95,6 +104,8 @@ func _on_Player_shoot(Bullet, direction, location):
 	_broadcast_shoot(direction, location)
 
 func _on_HyperGateway_started_gateway(_pid):
+	if profile.length() != 0: player.load_profile(profile)
+
 	gossip.url = url
 	gossip.start_listening()
 

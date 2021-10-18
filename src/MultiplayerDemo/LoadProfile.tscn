@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/MultiplayerDemo/LoadProfile.gd" type="Script" id=1]
 [ext_resource path="res://src/HyperGateway/HyperGateway.gd" type="Script" id=2]
-[ext_resource path="res://src/HyperRequest/HyperRequest.gd" type="Script" id=3]
-[ext_resource path="res://src/HyperRequest/HyperUploader.gd" type="Script" id=4]
+[ext_resource path="res://src/MultiplayerDemo/PlayerProfile.tscn" type="PackedScene" id=3]
 
 [node name="LoadProfile" type="VBoxContainer"]
 anchor_right = 1.0
@@ -15,18 +14,19 @@ __meta__ = {
 
 [node name="Loader" type="CenterContainer" parent="."]
 margin_right = 666.0
-margin_bottom = 331.0
+margin_bottom = 666.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="Loader"]
 margin_left = 308.0
-margin_top = 158.0
+margin_top = 326.0
 margin_right = 357.0
-margin_bottom = 172.0
+margin_bottom = 340.0
 text = "Loading"
 
 [node name="Form" type="VBoxContainer" parent="."]
+visible = false
 margin_top = 335.0
 margin_right = 666.0
 margin_bottom = 666.0
@@ -64,24 +64,9 @@ text = "Start"
 
 [node name="HyperGateway" type="Node" parent="."]
 script = ExtResource( 2 )
+autoStart = false
 
-[node name="UploadFileRequest" type="HTTPRequest" parent="."]
-script = ExtResource( 3 )
-
-[node name="ListInfoRequest" type="HTTPRequest" parent="."]
-script = ExtResource( 3 )
-
-[node name="LoadImageRequest" type="HTTPRequest" parent="."]
-script = ExtResource( 3 )
-
-[node name="LoadURLRequest" type="HTTPRequest" parent="."]
-script = ExtResource( 3 )
-
-[node name="UpdateProfileRequest" type="HTTPRequest" parent="."]
-script = ExtResource( 3 )
-
-[node name="HyperUploader" type="Node" parent="."]
-script = ExtResource( 4 )
+[node name="PlayerProfile" parent="." instance=ExtResource( 3 )]
 
 [node name="FileDialog" type="FileDialog" parent="."]
 margin_top = 536.0
@@ -99,10 +84,10 @@ current_path = "/home/mauve/programming/godot/hypergodot/"
 [connection signal="pressed" from="Form/ImageChooser" to="." method="_on_ImageChooser_pressed"]
 [connection signal="pressed" from="Form/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="started_gateway" from="HyperGateway" to="." method="_on_HyperGateway_started_gateway"]
-[connection signal="request_completed" from="UploadFileRequest" to="." method="_on_UploadFileRequest_request_completed"]
-[connection signal="request_completed" from="ListInfoRequest" to="." method="_on_ListInfoRequest_request_completed"]
-[connection signal="request_completed" from="LoadImageRequest" to="." method="_on_LoadImageRequest_request_completed"]
-[connection signal="request_completed" from="LoadURLRequest" to="." method="_on_LoadURLRequest_request_completed"]
-[connection signal="request_completed" from="UpdateProfileRequest" to="." method="_on_UpdateProfileRequest_request_completed"]
-[connection signal="uploaded" from="HyperUploader" to="." method="_on_HyperUploader_uploaded"]
+[connection signal="error" from="PlayerProfile" to="." method="_on_PlayerProfile_error"]
+[connection signal="image" from="PlayerProfile" to="." method="_on_PlayerProfile_image"]
+[connection signal="info" from="PlayerProfile" to="." method="_on_PlayerProfile_info"]
+[connection signal="no_info" from="PlayerProfile" to="." method="_on_PlayerProfile_no_info"]
+[connection signal="resolved" from="PlayerProfile" to="." method="_on_PlayerProfile_resolved"]
+[connection signal="updated" from="PlayerProfile" to="." method="_on_PlayerProfile_updated"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

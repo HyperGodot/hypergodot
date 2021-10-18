@@ -74,7 +74,7 @@ Display=8
 [application]
 
 config/name="HyperGodot"
-run/main_scene="res://src/HyperLoad/HyperLoad.tscn"
+run/main_scene="res://src/MultiplayerDemo/MultiplayerDemo.tscn"
 config/icon="res://icon.png"
 
 [display]

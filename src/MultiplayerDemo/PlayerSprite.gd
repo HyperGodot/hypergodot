@@ -1,6 +1,12 @@
 extends KinematicBody2D
 
 export var radius: float = 30 setget set_radius
+export var has_profile = false
+
+func load_profile(profile_url):
+	has_profile = true
+	$PlayerProfile.url = profile_url
+	$PlayerProfile.load_profile()
 
 func set_texture(texture):
 	$Sprite.texture = texture
@@ -35,3 +41,10 @@ func _set_colission_radius(radius):
 func _set_visibility_radius(radius):
 	var rect = Rect2(-radius, -radius, radius*2, radius*2)
 	$VisibilityNotifier2D.rect = rect
+
+func _on_PlayerProfile_image(path):
+	var texture = ImageTexture.new()
+	var image = Image.new()
+	image.load(path)
+	texture.create_from_image(image)
+	set_texture(texture)
