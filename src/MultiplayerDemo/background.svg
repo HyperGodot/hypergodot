@@ -1,0 +1,39 @@
+
+<svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 69 69" width="69" height="69">
+  <style>
+    .dot {
+      fill: rgb(165, 24, 201);
+      stroke: #FCFCFC;
+      stroke-width: 1;
+    }
+    .bg {
+      fill: #111;
+    }
+  </style>
+  <rect class="bg" width="69" height="69" />
+<g transform="rotate(-90, 34.5 34.5) translate(34.5, 34.5)">
+  <!--<circle class="dot" r="5.75" cx="11.5" cy="0" />
+<circle class="dot" r="5.75" cx="5.750000000000001" cy="9.959292143521044" />
+<circle class="dot" r="5.75" cx="-5.749999999999997" cy="9.959292143521045" />
+<circle class="dot" r="5.75" cx="-11.5" cy="1.4083438190194562e-15" />
+<circle class="dot" r="5.75" cx="-5.750000000000005" cy="-9.959292143521042" />
+<circle class="dot" r="5.75" cx="5.750000000000001" cy="-9.959292143521044" />-->
+
+  <!--<circle class="dot" r="5.75" cx="19.91858428704209" cy="11.499999999999998" />
+<circle class="dot" r="5.75" cx="1.4083438190194562e-15" cy="23" />
+<circle class="dot" r="5.75" cx="-19.91858428704209" cy="11.499999999999998" />
+<circle class="dot" r="5.75" cx="-19.918584287042087" cy="-11.500000000000002" />
+<circle class="dot" r="5.75" cx="-4.225031457058368e-15" cy="-23" />
+<circle class="dot" r="5.75" cx="19.918584287042084" cy="-11.50000000000001" />-->
+
+  <circle class="dot" r="5.75" cx="25.875" cy="0" />
+<circle class="dot" r="5.75" cx="12.937500000000004" cy="22.408407322922347" />
+<circle class="dot" r="5.75" cx="-12.937499999999995" cy="22.40840732292235" />
+<circle class="dot" r="5.75" cx="-25.875" cy="3.1687735927937763e-15" />
+<circle class="dot" r="5.75" cx="-12.93750000000001" cy="-22.408407322922347" />
+<circle class="dot" r="5.75" cx="12.937500000000004" cy="-22.408407322922347" />
+
+  <circle class="dot" r="5.75"/>
+</g>
+</svg>
+

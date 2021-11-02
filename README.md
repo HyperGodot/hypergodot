@@ -31,6 +31,7 @@ A Godot plugin and example project for loading assets from the [hypercore-protoc
 	- [ ] Create custom maps from an image and a JSON file
 	- [ ] Auto-discover which maps are active
 - [ ] Enable code to work in Godot Web in Agregore
+	- [ ] Use new [JavaScriptObject](https://godotengine.org/article/godot-web-progress-report-9) API from Godot 4
 - [ ] Enable code to work in Godot Web in regular browsers
 - [ ] Load gltf scene from hyper
 - [ ] Load VRM avatar from hyper (social multiplayer) [VRM stuff](https://github.com/V-Sekai/godot-vrm/blob/godot3/addons/vrm/import_vrm.gd)

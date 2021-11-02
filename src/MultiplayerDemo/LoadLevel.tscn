@@ -1,0 +1,93 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/MultiplayerDemo/LoadLevel.gd" type="Script" id=1]
+[ext_resource path="res://src/HyperGateway/HyperGateway.gd" type="Script" id=2]
+[ext_resource path="res://src/MultiplayerDemo/LevelInfo.tscn" type="PackedScene" id=3]
+
+[node name="LoadLevel" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Loader" type="CenterContainer" parent="."]
+margin_right = 666.0
+margin_bottom = 666.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Loader"]
+margin_left = 308.0
+margin_top = 326.0
+margin_right = 357.0
+margin_bottom = 340.0
+text = "Loading"
+
+[node name="Form" type="VBoxContainer" parent="."]
+visible = false
+margin_top = 335.0
+margin_right = 666.0
+margin_bottom = 666.0
+size_flags_vertical = 3
+
+[node name="TitleLabel" type="Label" parent="Form"]
+margin_right = 666.0
+margin_bottom = 14.0
+text = "Level Title"
+
+[node name="TitleInput" type="LineEdit" parent="Form"]
+margin_top = 18.0
+margin_right = 666.0
+margin_bottom = 42.0
+text = "New Level"
+
+[node name="PictureLabel" type="Label" parent="Form"]
+margin_top = 46.0
+margin_right = 666.0
+margin_bottom = 60.0
+text = "Picture"
+
+[node name="ImageChooser" type="Button" parent="Form"]
+margin_top = 64.0
+margin_right = 666.0
+margin_bottom = 84.0
+text = "Choose Image"
+
+[node name="StartButton" type="Button" parent="Form"]
+margin_top = 88.0
+margin_right = 666.0
+margin_bottom = 108.0
+disabled = true
+text = "Start"
+
+[node name="HyperGateway" type="Node" parent="."]
+script = ExtResource( 2 )
+autoStart = false
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_top = 536.0
+margin_right = 666.0
+margin_bottom = 666.0
+popup_exclusive = true
+window_title = "Open a File"
+resizable = true
+dialog_autowrap = true
+mode = 0
+access = 2
+current_dir = "/home/mauve/programming/godot/hypergodot"
+current_path = "/home/mauve/programming/godot/hypergodot/"
+
+[node name="LevelInfo" parent="." instance=ExtResource( 3 )]
+
+[connection signal="pressed" from="Form/ImageChooser" to="." method="_on_ImageChooser_pressed"]
+[connection signal="pressed" from="Form/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="started_gateway" from="HyperGateway" to="." method="_on_HyperGateway_started_gateway"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="error" from="LevelInfo" to="." method="_on_LevelInfo_error"]
+[connection signal="image" from="LevelInfo" to="." method="_on_LevelInfo_image"]
+[connection signal="info" from="LevelInfo" to="." method="_on_LevelInfo_info"]
+[connection signal="no_info" from="LevelInfo" to="." method="_on_LevelInfo_no_info"]
+[connection signal="resolved" from="LevelInfo" to="." method="_on_LevelInfo_resolved"]
+[connection signal="updated" from="LevelInfo" to="." method="_on_LevelInfo_updated"]

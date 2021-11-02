@@ -3,8 +3,8 @@ extends Node2D
 var RemotePlayer = preload("res://src/MultiplayerDemo/RemotePlayer.tscn")
 var RemoteBullet = preload("res://src/MultiplayerDemo/RemoteBullet.tscn")
 
-#export var url: String = "hyper://blog.mauve.moe/"
-export var url: String = "hyper://70338a94d7415990ab4a3160cf98a5d940243d7fa24dd297352e66b52d3ff841/"
+export var url: String = "hyper://blog.mauve.moe/"
+#export var url: String = "hyper://70338a94d7415990ab4a3160cf98a5d940243d7fa24dd297352e66b52d3ff841/"
 export var profile : String = ""
 export var spawn_gateway = true
 
@@ -19,7 +19,16 @@ const knownPlayers = {}
 
 func _ready():
 	if spawn_gateway: gateway.start()
-	elif profile.length() != 0: player.load_profile(profile)
+	else: _perform_setup()
+	
+func _perform_setup():
+	if profile.length() != 0: player.load_profile(profile)
+
+	gossip.url = url
+	gossip.start_listening()
+	
+	$LevelInfo.url = url
+	$LevelInfo.load_info()
 
 func get_player_object(id):
 	if knownPlayers.has(id): return knownPlayers[id]
@@ -31,6 +40,13 @@ func get_player_object(id):
 	_broadcast_player()
 
 	return remotePlayer
+
+func set_background(image_path):
+	var texture = ImageTexture.new()
+	var image = Image.new()
+	image.load(image_path)
+	texture.create_from_image(image)
+	$Backround.texture = texture
 
 func _broadcast_player():
 	var position = player.position
@@ -104,10 +120,7 @@ func _on_Player_shoot(Bullet, direction, location):
 	_broadcast_shoot(direction, location)
 
 func _on_HyperGateway_started_gateway(_pid):
-	if profile.length() != 0: player.load_profile(profile)
-
-	gossip.url = url
-	gossip.start_listening()
+	_perform_setup()
 
 func _on_HyperGossip_listening(_extension_name):
 	print('Started listening on events')
@@ -124,3 +137,6 @@ func _on_HyperGossip_event(type, data, from):
 func _on_Player_moved(_position, _rotation, _velocity):
 	# TODO: Don't broadcast too often to avoid flooding the system
 	_broadcast_player()
+
+func _on_LevelInfo_image(path):
+	set_background(path)
