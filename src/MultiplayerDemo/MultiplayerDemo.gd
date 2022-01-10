@@ -10,5 +10,5 @@ func _on_LoadProfile_profile_ready(url):
 	game.spawn_gateway = false
 	add_child(game)
 
-func _on_HyperGateway_started_gateway(pid):
+func _on_HyperGateway_started_gateway(_pid):
 	$LoadProfile.load_profile()

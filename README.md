@@ -28,11 +28,13 @@ A Godot plugin and example project for loading assets from the [hypercore-protoc
 	- [x] Refactor chat system to be more general purpose (not just texts)
 	- [x] Basic demo moving blobs around on a map
 	- [x] Place usernames in a hyperdrive's json file along with an image for your blob
-	- [ ] Create custom maps from an image and a JSON file
+	- [x] Create custom maps from an image and a JSON file
 	- [ ] Auto-discover which maps are active
 - [ ] Enable code to work in Godot Web in Agregore
 	- [ ] Use new [JavaScriptObject](https://godotengine.org/article/godot-web-progress-report-9) API from Godot 4
 - [ ] Enable code to work in Godot Web in regular browsers
+- [ ] Update to latest hypercore protocol stuff
+- [ ] Add multi-writer for hyperdrives
 - [ ] Load gltf scene from hyper
 - [ ] Load VRM avatar from hyper (social multiplayer) [VRM stuff](https://github.com/V-Sekai/godot-vrm/blob/godot3/addons/vrm/import_vrm.gd)
 - [ ] Folder sync (From `hyper://` to fs, from fs to `hyper://`)

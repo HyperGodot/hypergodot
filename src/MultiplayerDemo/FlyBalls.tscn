@@ -5,7 +5,7 @@
 [ext_resource path="res://src/MultiplayerDemo/FlyBalls.gd" type="Script" id=3]
 [ext_resource path="res://src/HyperGateway/HyperGateway.gd" type="Script" id=4]
 [ext_resource path="res://src/multiplayer/HyperGossip.gd" type="Script" id=5]
-[ext_resource path="res://src/MultiplayerDemo/LevelInfo.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/multiplayer/InfoLoader.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/MultiplayerDemo/background.png" type="Texture" id=7]
 
 [node name="FlyBalls" type="Node2D"]
@@ -26,13 +26,13 @@ script = ExtResource( 2 )
 
 [node name="HyperGossip" type="Node" parent="."]
 script = ExtResource( 5 )
-extension_name = "flyballs-v1"
 
 [node name="HyperGateway" type="Node" parent="."]
 script = ExtResource( 4 )
 autoStart = false
 
 [node name="LevelInfo" parent="." instance=ExtResource( 6 )]
+profile_file = "level.json"
 autoload_image = true
 
 [connection signal="moved" from="Player" to="." method="_on_Player_moved"]

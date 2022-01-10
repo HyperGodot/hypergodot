@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/MultiplayerDemo/LoadProfile.gd" type="Script" id=1]
 [ext_resource path="res://src/HyperGateway/HyperGateway.gd" type="Script" id=2]
-[ext_resource path="res://src/MultiplayerDemo/PlayerProfile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/multiplayer/InfoLoader.tscn" type="PackedScene" id=3]
 
 [node name="LoadProfile" type="VBoxContainer"]
 anchor_right = 1.0
@@ -67,6 +67,10 @@ script = ExtResource( 2 )
 autoStart = false
 
 [node name="PlayerProfile" parent="." instance=ExtResource( 3 )]
+url = "hyper://flyballs-profile/"
+defaults = {
+"username": "anonymous"
+}
 
 [node name="FileDialog" type="FileDialog" parent="."]
 margin_top = 536.0
@@ -87,7 +91,4 @@ current_path = "/home/mauve/programming/godot/hypergodot/"
 [connection signal="error" from="PlayerProfile" to="." method="_on_PlayerProfile_error"]
 [connection signal="image" from="PlayerProfile" to="." method="_on_PlayerProfile_image"]
 [connection signal="info" from="PlayerProfile" to="." method="_on_PlayerProfile_info"]
-[connection signal="no_info" from="PlayerProfile" to="." method="_on_PlayerProfile_no_info"]
-[connection signal="resolved" from="PlayerProfile" to="." method="_on_PlayerProfile_resolved"]
-[connection signal="updated" from="PlayerProfile" to="." method="_on_PlayerProfile_updated"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

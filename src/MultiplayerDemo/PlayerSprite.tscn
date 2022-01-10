@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/MultiplayerDemo/icon.png" type="Texture" id=1]
 [ext_resource path="res://src/MultiplayerDemo/PlayerSprite.gd" type="Script" id=2]
-[ext_resource path="res://src/MultiplayerDemo/PlayerProfile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/multiplayer/InfoLoader.tscn" type="PackedScene" id=3]
 
 [sub_resource type="ParticlesMaterial" id=1]
 flag_disable_z = true
@@ -41,7 +41,6 @@ shape = SubResource( 2 )
 rect = Rect2( -40, -40, 80, 80 )
 
 [node name="PlayerProfile" parent="." instance=ExtResource( 3 )]
-autoload_image = true
 
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="image" from="PlayerProfile" to="." method="_on_PlayerProfile_image"]

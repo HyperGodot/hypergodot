@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/MultiplayerDemo/LoadLevel.gd" type="Script" id=1]
 [ext_resource path="res://src/HyperGateway/HyperGateway.gd" type="Script" id=2]
-[ext_resource path="res://src/MultiplayerDemo/LevelInfo.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/multiplayer/InfoLoader.tscn" type="PackedScene" id=4]
 
 [node name="LoadLevel" type="VBoxContainer"]
 anchor_right = 1.0
@@ -79,7 +79,12 @@ access = 2
 current_dir = "/home/mauve/programming/godot/hypergodot"
 current_path = "/home/mauve/programming/godot/hypergodot/"
 
-[node name="LevelInfo" parent="." instance=ExtResource( 3 )]
+[node name="LevelInfo" parent="." instance=ExtResource( 4 )]
+url = "hyper://multiplayer-level/"
+profile_file = "level.json"
+defaults = {
+"title": "New Level"
+}
 
 [connection signal="pressed" from="Form/ImageChooser" to="." method="_on_ImageChooser_pressed"]
 [connection signal="pressed" from="Form/StartButton" to="." method="_on_StartButton_pressed"]

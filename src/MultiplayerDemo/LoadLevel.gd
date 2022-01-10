@@ -46,6 +46,9 @@ func _on_HyperGateway_started_gateway(_pid):
 func _on_StartButton_pressed():
 	print("Starting next step")
 	show_loader()
+	$LevelInfo.update({
+		"title": get_title()
+	})
 	$LevelInfo.resolve_url()
 
 func _on_LevelInfo_error(err):
@@ -63,13 +66,13 @@ func _on_LevelInfo_image(path):
 
 	$Form/ImageChooser.icon = texture
 
-func _on_LevelInfo_info(title: String, image: String):
-	print("Loaded level info:", {"title": title, "image": image})
+func _on_LevelInfo_info(info):
+	print("Loaded level info:", info)
 	$Form/StartButton.disabled = false
-	$Form/TitleInput.text = title
+	$Form/TitleInput.text = info.title
 
-	if image != null && image.length() != 0:
-		load_image(image)
+	if info.has('image') && info.image.length() != 0:
+		load_image(info.image)
 	else: hide_loader()
 
 func _on_LevelInfo_updated():

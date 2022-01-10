@@ -3,7 +3,7 @@ extends Node
 var URLParser = preload("res://src/utils/URLParser.gd")
 var parser = URLParser.new()
 
-signal info(username, image)
+signal info(info)
 signal no_info()
 signal image(path)
 signal updated()
@@ -16,8 +16,7 @@ export var profile_file: String = 'profile.json'
 
 export var autoload = false
 export var autoload_image = false
-
-const DEFAULT_USERNAME = 'Anonymous'
+export var defaults = {}
 
 var info_cache = null
 var has_loaded = false
@@ -31,17 +30,13 @@ func _ready():
 	
 	print("Profile setup")
 	if autoload:
-		load_profile()
+		load_info()
 
-func get_username():
-	if info_cache == null: return DEFAULT_USERNAME
-	if !info_cache.has('username'): return DEFAULT_USERNAME
-	return info_cache.username
-
-func set_username(username):
-	update_info({
-		"username": username
-	})
+func get(field):
+	if info_cache != null and info_cache.has(field):
+		return info_cache[field]
+	if defaults.has(field):
+		return defaults.get(field)
 
 func update_info(updates):
 	var data = {}
@@ -49,16 +44,21 @@ func update_info(updates):
 	if info_cache != null:
 		for key in info_cache.keys():
 			data[key] = info_cache[key]
+	else:
+		for key in defaults:
+			data[key] = defaults[key]
 
 	for key in updates.keys():
-		data[key] = info_cache[key]
+		data[key] = updates[key]
 
 	var json = JSON.print(data)
 	var info_url = url + profile_file
-
+	
 	$updateInfoRequest.request(info_url, [], true, HTTPClient.METHOD_PUT, json)
 
-func load_profile():
+	info_cache = data
+
+func load_info():
 	var info_url = url + profile_file
 	$loadInfoRequest.request(info_url)
 
@@ -66,14 +66,14 @@ func resolve_url():
 	var url_record = url + '.well-known/hyper'
 	$resolveURLRequest.request(url_record)
 
-func download_image(url: String):
-	print('Loading image: ', url)
-	var file_name = url.get_file()
-	var key = parser.parse(url).host
+func download_image(image_url: String):
+	print('Loading image: ', image_url)
+	var file_name = image_url.get_file()
+	var key = parser.parse(image_url).host
 	# Save the picture with the profile key prefixed to it
 	picture_path = cache_folder + key + '-' + file_name
 	$loadImageRequest.download_file = picture_path
-	$loadImageRequest.request(url)
+	$loadImageRequest.request(image_url)
 
 func upload_image(path: String):
 	var picture_name = path.get_file()
@@ -96,10 +96,9 @@ func _on_loadInfoRequest_request_completed(_result, response_code, _headers, bod
 	
 	info_cache = parsed.result
 
-	var username = info_cache.username
 	var image = info_cache.image
 	
-	emit_signal("info", username, image)
+	emit_signal("info", info_cache)
 	
 	if image != null and autoload_image:
 		download_image(image)
@@ -114,7 +113,6 @@ func _on_uploader_uploaded(resolved_url, response_code):
 		return
 
 	update_info({
-		"username": get_username(),
 		"image": resolved_url
 	})
 
@@ -138,7 +136,8 @@ func _on_resolveURLRequest_request_completed(result, response_code, _headers, bo
 		return
 
 	var lines = body.get_string_from_utf8()
-	var url = lines.split('\n')[0]
-	if !url.ends_with('/'):
-		url += '/'
-	emit_signal('resolved', url)
+	var resolved_url = lines.split('\n')[0]
+	if !resolved_url.ends_with('/'):
+		resolved_url += '/'
+
+	emit_signal('resolved', resolved_url)

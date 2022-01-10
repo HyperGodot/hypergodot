@@ -14,7 +14,7 @@ func _ready():
 func load_profile():
 	print("Initial profile load")
 	$PlayerProfile.url = profile_url
-	$PlayerProfile.load_profile()
+	$PlayerProfile.load_info()
 
 func hide_loader():
 	$Loader.hide()
@@ -47,6 +47,9 @@ func _on_HyperGateway_started_gateway(_pid):
 func _on_StartButton_pressed():
 	print("Starting next step")
 	show_loader()
+	$PlayerProfile.update_info({
+		"username": get_username()
+	})
 	$PlayerProfile.resolve_url()
 
 func _on_PlayerProfile_error(err):
@@ -64,13 +67,13 @@ func _on_PlayerProfile_image(path):
 
 	$Form/ImageChooser.icon = texture
 
-func _on_PlayerProfile_info(username: String, image: String):
-	print("Loaded player profile:", {"username": username, "image": image})
+func _on_PlayerProfile_info(info):
+	print("Loaded player profile:", info)
 	$Form/StartButton.disabled = false
-	$Form/UsernameInput.text = username
+	$Form/UsernameInput.text = info.username
 
-	if image != null && image.length() != 0:
-		load_image(image)
+	if info.has('image') && info.image.length() != 0:
+		load_image(info.image)
 	else: hide_loader()
 
 func _on_PlayerProfile_updated():

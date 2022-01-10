@@ -6,7 +6,7 @@ export var has_profile = false
 func load_profile(profile_url):
 	has_profile = true
 	$PlayerProfile.url = profile_url
-	$PlayerProfile.load_profile()
+	$PlayerProfile.load_info()
 
 func set_texture(texture):
 	$Sprite.texture = texture
@@ -18,28 +18,28 @@ func _on_VisibilityNotifier2D_screen_exited():
 	position.x = viewport.x / 2
 	position.y = viewport.y / 2
 
-func set_radius(radius):
-	_set_sprite_radius(radius)
-	_set_colission_radius(radius)
-	_set_visibility_radius(radius)
+func set_radius(new_radius):
+	_set_sprite_radius(new_radius)
+	_set_colission_radius(new_radius)
+	_set_visibility_radius(new_radius)
 
-func _set_sprite_radius(radius):
+func _set_sprite_radius(new_radius):
 	var sprite = $Sprite
 	var rect = sprite.get_rect()
 	var xCurrent = rect.size.x
 	var yCurrent = rect.size.y
 
-	var xScale = (radius * 2) / xCurrent
-	var yScale = (radius * 2) / yCurrent
+	var xScale = (new_radius * 2) / xCurrent
+	var yScale = (new_radius * 2) / yCurrent
 
 	sprite.scale.x = xScale
 	sprite.scale.y = yScale
 
-func _set_colission_radius(radius):
-	$CollisionShape2D.shape.radius = radius
+func _set_colission_radius(new_radius):
+	$CollisionShape2D.shape.radius = new_radius
 
-func _set_visibility_radius(radius):
-	var rect = Rect2(-radius, -radius, radius*2, radius*2)
+func _set_visibility_radius(new_radius):
+	var rect = Rect2(-new_radius, -new_radius, new_radius*2, new_radius*2)
 	$VisibilityNotifier2D.rect = rect
 
 func _on_PlayerProfile_image(path):
@@ -48,3 +48,4 @@ func _on_PlayerProfile_image(path):
 	image.load(path)
 	texture.create_from_image(image)
 	set_texture(texture)
+

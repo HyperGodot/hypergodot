@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/HyperRequest/HyperUploader.gd"
 }, {
+"base": "HyperGossip",
+"class": "ListGossip",
+"language": "GDScript",
+"path": "res://src/multiplayer/ListGossip.gd"
+}, {
 "base": "Reference",
 "class": "WAT",
 "language": "GDScript",
@@ -56,6 +61,7 @@ _global_script_class_icons={
 "HyperGossip": "",
 "HyperRequest": "",
 "HyperUploader": "",
+"ListGossip": "",
 "WAT": "",
 "WATTest": ""
 }
